@@ -81,7 +81,7 @@ extension MessagesViewController {
   /// Updates bottom messagesCollectionView inset based on the position of inputContainerView
   internal func updateMessageCollectionViewBottomInset() {
     let collectionViewHeight = messagesCollectionView.frame.maxY
-    let newBottomInset = collectionViewHeight - (inputContainerView.frame.minY - additionalBottomInset) -
+    let newBottomInset = collectionViewHeight - inputContainerView.frame.minY -
       automaticallyAddedBottomInset
     let normalizedNewBottomInset = max(0, newBottomInset)
     let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
