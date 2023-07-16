@@ -40,7 +40,7 @@ extension UIColor {
 
   internal static var collectionViewBackground: UIColor { colorFromAssetBundle(named: "collectionViewBackground") }
 
-  internal static var typingIndicatorDot: UIColor { colorFromAssetBundle(named: "typingIndicatorDot") }
+  public static var typingIndicatorDot: UIColor { colorFromAssetBundle(named: "typingIndicatorDot") }
 
   internal static var label: UIColor { colorFromAssetBundle(named: "label") }
 
