@@ -23,7 +23,7 @@
 import UIKit
 
 /// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
-open class MessageCollectionViewCell: UICollectionViewCell {
+open class MessageCollectionViewCell: UICollectionViewListCell {
   // MARK: Lifecycle
 
   // MARK: - Initializers
