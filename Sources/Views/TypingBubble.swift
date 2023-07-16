@@ -51,6 +51,13 @@ open class TypingBubble: UIView {
     }
   }
 
+  open var accessoryView: UIView? {
+    didSet {
+      oldValue?.removeFromSuperview()
+      accessoryView.map { contentBubble.addSubview($0) }
+    }
+  }
+
   // MARK: - Animation Layers
 
   open var contentPulseAnimationLayer: CABasicAnimation {
@@ -97,6 +104,8 @@ open class TypingBubble: UIView {
 
     let ratio = bounds.width / bounds.height
     let extraRightInset = bounds.width - 1.65 / ratio * bounds.width
+    let accessoryWidth = accessoryView?.intrinsicContentSize.width ?? 0
+    let accessorySpacing = accessoryView == nil ? 0.0 : 4.0
 
     let tinyBubbleRadius: CGFloat = bounds.height / 6
     tinyBubble.frame = CGRect(
@@ -116,7 +125,7 @@ open class TypingBubble: UIView {
     let contentBubbleFrame = CGRect(
       x: tinyBubbleRadius + offset,
       y: 0,
-      width: bounds.width - (tinyBubbleRadius + offset) - extraRightInset,
+      width: bounds.width - (tinyBubbleRadius + offset) - extraRightInset + accessorySpacing + accessoryWidth,
       height: bounds.height - (tinyBubbleRadius + offset))
     let contentBubbleFrameCornerRadius = contentBubbleFrame.height / 2
 
@@ -125,10 +134,13 @@ open class TypingBubble: UIView {
 
     let insets = UIEdgeInsets(
       top: offset,
-      left: contentBubbleFrameCornerRadius / 1.25,
+      left: contentBubbleFrameCornerRadius / 1.25 + accessorySpacing + accessoryWidth,
       bottom: offset,
       right: contentBubbleFrameCornerRadius / 1.25)
     typingIndicator.frame = contentBubble.bounds.inset(by: insets)
+
+    accessoryView?.frame.origin.x = contentBubble.bounds.minX + contentBubbleFrameCornerRadius / 1.25 - accessorySpacing
+    accessoryView?.center.y = contentBubble.bounds.height / 2
   }
 
   // MARK: - Animation API
