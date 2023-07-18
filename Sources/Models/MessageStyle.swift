@@ -28,6 +28,7 @@ public enum MessageStyle {
   case none
   case bubble
   case bubbleOutline(UIColor)
+  case bubbleInset(TailCorner)
   case bubbleTail(TailCorner, TailStyle)
   case bubbleTailOutline(UIColor, TailCorner, TailStyle)
   case custom((MessageContainerView) -> Void)
@@ -88,7 +89,7 @@ public enum MessageStyle {
       return nil
     case .bubble, .bubbleOutline:
       break
-    case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _):
+    case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _), .bubbleInset(let corner):
       guard let cgImage = image.cgImage else { return nil }
       image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
     }
@@ -116,7 +117,7 @@ public enum MessageStyle {
     switch self {
     case .bubble, .bubbleOutline:
       return imageName
-    case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _):
+    case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _), .bubbleInset(let corner):
       return imageName + "_" + corner.rawValue
     default:
       return nil
@@ -131,6 +132,8 @@ public enum MessageStyle {
       return "bubble_outlined"
     case .bubbleTail(_, let tailStyle):
       return "bubble_full" + tailStyle.imageNameSuffix
+    case .bubbleInset(_):
+      return "bubble_full_inset"
     case .bubbleTailOutline(_, _, let tailStyle):
       return "bubble_outlined" + tailStyle.imageNameSuffix
     case .none, .custom:
